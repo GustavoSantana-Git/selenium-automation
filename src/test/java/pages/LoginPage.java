@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage{
 
@@ -36,15 +37,23 @@ public class LoginPage extends BasePage{
     @FindBy(css = ".nav > li:nth-child(4) > a:nth-child(1)")
     private WebElement signLogButton;
 
-
+    @FindBy(css = "a[href='/logout']")
+    private WebElement logoutLink;
 
     public void login(String username, String pass) {
         click(signLogButton);
         write(usernameField, username);
         write(passwordField , pass);
         click(loginButton);
+    }
 
-
+    public boolean isLogoutLinkPresent() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(logoutLink));
+            return logoutLink.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
     public void signup(String name, String email) {
         click(signLogButton);

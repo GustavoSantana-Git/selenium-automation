@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 import utils.Config;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class LoginTest extends BaseTest {
     LoginPage lp;
 
@@ -19,7 +21,8 @@ public class LoginTest extends BaseTest {
     public void testLogin() {
 
         lp.login(Config.get("USER_STANDARD"), Config.get("PASSWORD_STANDARD"));
-//         assert driver.getCurrentUrl().contains("/dashboard") : "Login falhou, URL atual: " + driver.getCurrentUrl();
+        assertTrue(lp.isLogoutLinkPresent(), "Logout link should be visible after successful login");
+
     }
 
 }
