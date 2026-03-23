@@ -29,15 +29,21 @@ Validar os principais fluxos de um e-commerce, garantindo a integridade de funci
 
     Configuração: Dotenv para gestão de URLs e credenciais de teste.
 
-🏗️ Estrutura de Pastas
 
+### 📂 Estrutura de Pastas
+
+```text
 src/
- ├── main/java/
- │    ├── pages/          # Classes com elementos e ações (POM)
- │    └── utils/          # Configurações de ambiente (.env) e Helpers
- └── test/java/
-      ├── base/           # Setup/Teardown e Hooks de Screenshot
-      └── tests/          # Cenários de teste divididos por funcionalidade
+├── main/
+│   └── java/
+│       ├── pages/       # Classes com elementos e ações (Page Object Model)
+│       └── utils/       # Configurações de ambiente (.env) e Helpers
+└── test/
+    └── java/
+        ├── base/        # Classes de Setup, Teardown e Hooks de Screenshot
+        └── tests/       # Cenários de teste divididos por funcionalidade
+```
+
 
 🚀 Como Executar
 
