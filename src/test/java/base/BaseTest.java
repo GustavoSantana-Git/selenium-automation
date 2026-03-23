@@ -19,7 +19,7 @@ public class BaseTest {
     protected WebDriver driver;
     @BeforeEach
     public void setUp() {
-        String browser = System.getProperty("browser", "chrome").toLowerCase();
+        String browser = System.getProperty("browser", "firefox").toLowerCase();
         driver = createDriver(browser);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();

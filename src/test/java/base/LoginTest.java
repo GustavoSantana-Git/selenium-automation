@@ -14,11 +14,12 @@ public class LoginTest extends BaseTest {
         // O 'driver' vem da BaseTest (super), já inicializado.
         lp = new LoginPage(driver);
     }
-     @Test
+
+    @Test
     public void testLogin() {
 
-         lp.login(Config.get("USER_STANDARD"), Config.get("PASSWORD_STANDARD"));
+        lp.login(Config.get("USER_STANDARD"), Config.get("PASSWORD_STANDARD"));
 //         assert driver.getCurrentUrl().contains("/dashboard") : "Login falhou, URL atual: " + driver.getCurrentUrl();
-     }
+    }
 
 }
