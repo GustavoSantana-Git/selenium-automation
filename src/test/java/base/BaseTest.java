@@ -3,6 +3,10 @@ package base;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import io.qameta.allure.Attachment;
+import org.junit.jupiter.api.TestInfo;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -50,9 +54,16 @@ public class BaseTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    public void tearDown(TestInfo testInfo) {
+        saveScreenshot(testInfo.getDisplayName());
         if (driver != null) {
             driver.quit();
         }
     }
+    @Attachment(value = "Page Screenshot - {name}", type = "image/png")
+    public byte[] saveScreenshot(String name) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
 }
+
+
