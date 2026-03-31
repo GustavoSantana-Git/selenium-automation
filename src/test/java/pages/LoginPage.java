@@ -29,6 +29,7 @@ public class LoginPage extends BasePage{
 
     @FindBy (css = ".signup-form input[data-qa='signup-email']")
     private WebElement signUpEmail;
+    
 
 
     @FindBy(css = "li a i.fa-user + b")
@@ -39,6 +40,9 @@ public class LoginPage extends BasePage{
 
     @FindBy(css = "a[href='/logout']")
     private WebElement logoutLink;
+
+    @FindBy(css = "p[style='color: red;']")
+    private WebElement errorMessage;
 
     public void login(String username, String pass) {
         click(signLogButton);
@@ -55,6 +59,29 @@ public class LoginPage extends BasePage{
             return false;
         }
     }
+
+    public boolean isErrorMessagePresent() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(errorMessage));
+            return errorMessage.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void logout() {
+        click(logoutLink);
+    }
+
+    public boolean isSignupErrorPresent() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(errorMessage));
+            return errorMessage.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void signup(String name, String email) {
         click(signLogButton);
         write(signUpName, name);

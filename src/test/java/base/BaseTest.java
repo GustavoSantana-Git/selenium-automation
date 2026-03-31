@@ -17,6 +17,10 @@ import org.openqa.selenium.edge.EdgeOptions;
 import utils.Config;
 
 import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import java.util.List;
 
 public class BaseTest {
 
@@ -25,7 +29,7 @@ public class BaseTest {
     public void setUp() {
         String browser = System.getProperty("browser", "firefox").toLowerCase();
         driver = createDriver(browser);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2)); // Lowered implicit wait
         driver.manage().window().maximize();
 
         driver.get(Config.get("BASE_URL"));
@@ -53,10 +57,27 @@ public class BaseTest {
         }
     }
 
+    /**
+     * Utility to hide all iframes (e.g., ads) that may block form fields.
+     */
+    protected void hideObstructingIframes() {
+        List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        for (WebElement iframe : iframes) {
+            try {
+                js.executeScript("arguments[0].style.display='none';", iframe);
+            } catch (Exception ignored) {}
+        }
+    }
+
     @AfterEach
     public void tearDown(TestInfo testInfo) {
         saveScreenshot(testInfo.getDisplayName());
         if (driver != null) {
+            try {
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0)); // Remove wait before quit
+                driver.switchTo().alert().dismiss(); // Dismiss alert if present
+            } catch (Exception ignored) {}
             driver.quit();
         }
     }
@@ -65,5 +86,3 @@ public class BaseTest {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
-
-
