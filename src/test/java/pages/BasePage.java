@@ -23,8 +23,8 @@ public class BasePage {
 
     protected void write(WebElement element, String text) {
         wait.until(ExpectedConditions.visibilityOf(element));
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         element.clear();
-        element.click();
         element.sendKeys(text);
     }
 
